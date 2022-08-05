@@ -4,6 +4,8 @@ Component: Arm Compiler for Embedded 6.18 Tool: armlink [5e4cc100]
 
 Section Cross References
 
+    main.o(.ARM.exidx.text.delay) refers to main.o(.text.delay) for [Anonymous Symbol]
+    main.o(.text.main) refers to main.o(.text.delay) for delay
     main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
     main.o(.ARM.exidx.text.SystemInit) refers to main.o(.text.SystemInit) for [Anonymous Symbol]
     startup_stm32f40xx.o(RESET) refers to startup_stm32f40xx.o(STACK) for __initial_sp
@@ -32,12 +34,13 @@ Section Cross References
 Removing Unused input sections from the image.
 
     Removing main.o(.text), (0 bytes).
+    Removing main.o(.ARM.exidx.text.delay), (8 bytes).
     Removing main.o(.ARM.exidx.text.main), (8 bytes).
     Removing main.o(.ARM.exidx.text.SystemInit), (8 bytes).
     Removing main.o(.ARM.use_no_argv), (4 bytes).
     Removing startup_stm32f40xx.o(HEAP), (512 bytes).
 
-5 unused section(s) (total 532 bytes) removed from the image.
+6 unused section(s) (total 540 bytes) removed from the image.
 
 ==============================================================================
 
@@ -80,10 +83,11 @@ Image Symbol Table
     .text                                    0x0800019c   Section       36  startup_stm32f40xx.o(.text)
     .text                                    0x080001c0   Section       36  init.o(.text)
     [Anonymous Symbol]                       0x080001e4   Section        0  main.o(.text.SystemInit)
-    [Anonymous Symbol]                       0x080001e8   Section        0  main.o(.text.main)
-    i.__scatterload_copy                     0x080001f2   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08000200   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08000202   Section       14  handlers.o(i.__scatterload_zeroinit)
+    [Anonymous Symbol]                       0x080001e8   Section        0  main.o(.text.delay)
+    [Anonymous Symbol]                       0x08000204   Section        0  main.o(.text.main)
+    i.__scatterload_copy                     0x08000278   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08000286   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08000288   Section       14  handlers.o(i.__scatterload_zeroinit)
     STACK                                    0x20000000   Section     1024  startup_stm32f40xx.o(STACK)
 
     Global Symbols
@@ -203,12 +207,13 @@ Image Symbol Table
     __scatterload                            0x080001c1   Thumb Code    28  init.o(.text)
     __scatterload_rt2                        0x080001c1   Thumb Code     0  init.o(.text)
     SystemInit                               0x080001e5   Thumb Code     2  main.o(.text.SystemInit)
-    main                                     0x080001e9   Thumb Code    10  main.o(.text.main)
-    __scatterload_copy                       0x080001f3   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08000201   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08000203   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    Region$$Table$$Base                      0x08000210   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08000220   Number         0  anon$$obj.o(Region$$Table)
+    delay                                    0x080001e9   Thumb Code    26  main.o(.text.delay)
+    main                                     0x08000205   Thumb Code   116  main.o(.text.main)
+    __scatterload_copy                       0x08000279   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08000287   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08000289   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    Region$$Table$$Base                      0x08000298   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080002a8   Number         0  anon$$obj.o(Region$$Table)
     __initial_sp                             0x20000400   Data           0  startup_stm32f40xx.o(STACK)
 
 
@@ -219,43 +224,46 @@ Memory Map of the image
 
   Image Entry point : 0x0800019d
 
-  Load Region LR_1 (Base: 0x08000000, Size: 0x00000220, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x08000000, Size: 0x000002a8, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00000220, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000002a8, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x08000000   0x08000000   0x00000188   Data   RO           15    RESET               startup_stm32f40xx.o
-    0x08000188   0x08000188   0x00000000   Code   RO           22  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000188   0x08000188   0x00000004   Code   RO           25    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x0800018c   0x0800018c   0x00000004   Code   RO           28    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000190   0x08000190   0x00000000   Code   RO           30    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000190   0x08000190   0x00000000   Code   RO           32    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000190   0x08000190   0x00000008   Code   RO           33    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000198   0x08000198   0x00000000   Code   RO           35    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000198   0x08000198   0x00000000   Code   RO           37    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000198   0x08000198   0x00000004   Code   RO           26    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x0800019c   0x0800019c   0x00000024   Code   RO           16  * .text               startup_stm32f40xx.o
-    0x080001c0   0x080001c0   0x00000024   Code   RO           39    .text               mc_w.l(init.o)
-    0x080001e4   0x080001e4   0x00000002   Code   RO            4    .text.SystemInit    main.o
+    0x08000000   0x08000000   0x00000188   Data   RO           17    RESET               startup_stm32f40xx.o
+    0x08000188   0x08000188   0x00000000   Code   RO           24  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000188   0x08000188   0x00000004   Code   RO           27    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x0800018c   0x0800018c   0x00000004   Code   RO           30    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000190   0x08000190   0x00000000   Code   RO           32    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000190   0x08000190   0x00000000   Code   RO           34    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000190   0x08000190   0x00000008   Code   RO           35    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000198   0x08000198   0x00000000   Code   RO           37    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000198   0x08000198   0x00000000   Code   RO           39    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000198   0x08000198   0x00000004   Code   RO           28    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x0800019c   0x0800019c   0x00000024   Code   RO           18  * .text               startup_stm32f40xx.o
+    0x080001c0   0x080001c0   0x00000024   Code   RO           41    .text               mc_w.l(init.o)
+    0x080001e4   0x080001e4   0x00000002   Code   RO            6    .text.SystemInit    main.o
     0x080001e6   0x080001e6   0x00000002   PAD
-    0x080001e8   0x080001e8   0x0000000a   Code   RO            2    .text.main          main.o
-    0x080001f2   0x080001f2   0x0000000e   Code   RO           43    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08000200   0x08000200   0x00000002   Code   RO           44    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08000202   0x08000202   0x0000000e   Code   RO           45    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08000210   0x08000210   0x00000010   Data   RO           42    Region$$Table       anon$$obj.o
+    0x080001e8   0x080001e8   0x0000001a   Code   RO            2    .text.delay         main.o
+    0x08000202   0x08000202   0x00000002   PAD
+    0x08000204   0x08000204   0x00000074   Code   RO            4    .text.main          main.o
+    0x08000278   0x08000278   0x0000000e   Code   RO           45    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08000286   0x08000286   0x00000002   Code   RO           46    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08000288   0x08000288   0x0000000e   Code   RO           47    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08000296   0x08000296   0x00000002   PAD
+    0x08000298   0x08000298   0x00000010   Data   RO           44    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x08000220, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x080002a8, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
 
-    Execution Region ER_ZI (Exec base: 0x20000000, Load base: 0x08000220, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000000, Load base: 0x080002a8, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000        -       0x00000400   Zero   RW           13    STACK               startup_stm32f40xx.o
+    0x20000000        -       0x00000400   Zero   RW           15    STACK               startup_stm32f40xx.o
 
 
 ==============================================================================
@@ -265,13 +273,13 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-        12          0          0          0          0        424   main.o
+       144          0          0          0          0        651   main.o
         36          8        392          0       1024        796   startup_stm32f40xx.o
 
     ----------------------------------------------------------------------
-        50          8        408          0       1024       1220   Object Totals
+       184          8        408          0       1024       1447   Object Totals
          0          0         16          0          0          0   (incl. Generated)
-         2          0          0          0          0          0   (incl. Padding)
+         4          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -289,8 +297,8 @@ Image component sizes
         36          8          0          0          0         68   init.o
 
     ----------------------------------------------------------------------
-        86         16          0          0          0         68   Library Totals
-         0          0          0          0          0          0   (incl. Padding)
+        88         16          0          0          0         68   Library Totals
+         2          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -299,7 +307,7 @@ Image component sizes
         86         16          0          0          0         68   mc_w.l
 
     ----------------------------------------------------------------------
-        86         16          0          0          0         68   Library Totals
+        88         16          0          0          0         68   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -308,15 +316,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-       136         24        408          0       1024       1492   Grand Totals
-       136         24        408          0       1024       1492   ELF Image Totals
-       136         24        408          0          0          0   ROM Totals
+       272         24        408          0       1024       1719   Grand Totals
+       272         24        408          0       1024       1719   ELF Image Totals
+       272         24        408          0          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                  544 (   0.53kB)
+    Total RO  Size (Code + RO Data)                  680 (   0.66kB)
     Total RW  Size (RW Data + ZI Data)              1024 (   1.00kB)
-    Total ROM Size (Code + RO Data + RW Data)        544 (   0.53kB)
+    Total ROM Size (Code + RO Data + RW Data)        680 (   0.66kB)
 
 ==============================================================================
 

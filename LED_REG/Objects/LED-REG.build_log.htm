@@ -21,29 +21,41 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
 Dialog DLL:      TCM.DLL V1.56.1.0
  
 <h2>Project:</h2>
-D:\Embed\TEST\LED-REG.uvprojx
-Project File Date:  08/03/2022
+D:\Embed\TEST\STM32\LED_REG\LED-REG.uvprojx
+Project File Date:  08/05/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.18', folder: 'C:\wSOFTWARE\Keil_v5\ARM\ARMCLANG\Bin'
-Rebuild target 'Target 1'
-main.c(14): warning: no newline at end of file [-Wnewline-eof]
-{}
-  ^
-main.c(13): warning: no previous prototype for function 'SystemInit' [-Wmissing-prototypes]
+Build target 'Target 1'
+main.c(3): warning: no previous prototype for function 'delay' [-Wmissing-prototypes]
+void delay(unsigned int count)
+     ^
+main.c(3): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void delay(unsigned int count)
+^
+static 
+main.c(12): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+        GPIOF_MODER &= ~(3<<(2*9));
+                    ~~ ^~~~~~~~~~~
+main.c(19): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                GPIOF_ODR &= ~(1<<9);
+                          ~~ ^~~~~~~
+main.c(29): warning: no newline at end of file [-Wnewline-eof]
+        
+        ^
+main.c(27): warning: no previous prototype for function 'SystemInit' [-Wmissing-prototypes]
 void SystemInit(void)
      ^
-main.c(13): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(27): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void SystemInit(void)
 ^
 static 
-2 warnings generated.
+5 warnings generated.
 compiling main.c...
-assembling startup_stm32f40xx.s...
 linking...
-Program Size: Code=136 RO-data=408 RW-data=0 ZI-data=1024  
+Program Size: Code=272 RO-data=408 RW-data=0 ZI-data=1024  
 FromELF: creating hex file...
-".\Objects\LED-REG.axf" - 0 Error(s), 2 Warning(s).
+".\Objects\LED-REG.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
