@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @file    Project/STM32F4xx_StdPeriph_Templates/stm32f4xx_it.h 
+  * @file    stm32f4xx_flash_ramfunc.h
   * @author  MCD Application Team
   * @version V1.4.0
   * @date    04-August-2014
-  * @brief   This file contains the headers of the interrupt handlers.
+  * @brief   Header file of FLASH RAMFUNC driver.
   ******************************************************************************
   * @attention
   *
@@ -25,36 +25,79 @@
   ******************************************************************************
   */
 
+
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32F4xx_IT_H
-#define __STM32F4xx_IT_H
+#ifndef __STM32F4xx_FLASH_RAMFUNC_H
+#define __STM32F4xx_FLASH_RAMFUNC_H
 
 #ifdef __cplusplus
  extern "C" {
-#endif 
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 
+/** @addtogroup STM32F4xx_StdPeriph_Driver
+  * @{
+  */
+
+/** @addtogroup FLASH RAMFUNC
+  * @{
+  */ 
+
 /* Exported types ------------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/** 
+  * @brief  __RAM_FUNC definition
+  */ 
+#if defined ( __CC_ARM   )
+/* ARM Compiler
+   ------------
+   RAM functions are defined using the toolchain options. 
+   Functions that are executed in RAM should reside in a separate source module.
+   Using the 'Options for File' dialog you can simply change the 'Code / Const' 
+   area of a module to a memory space in physical RAM.
+   Available memory areas are declared in the 'Target' tab of the 'Options for Target'
+   dialog. 
+*/
+#define __RAM_FUNC void 
+
+#elif defined ( __ICCARM__ )
+/* ICCARM Compiler
+   ---------------
+   RAM functions are defined using a specific toolchain keyword "__ramfunc". 
+*/
+#define __RAM_FUNC __ramfunc void
+
+#elif defined   (  __GNUC__  )
+/* GNU Compiler
+   ------------
+  RAM functions are defined using a specific toolchain attribute 
+   "__attribute__((section(".RamFunc")))".
+*/
+#define __RAM_FUNC void  __attribute__((section(".RamFunc")))
+
+#endif
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+/* Exported functions --------------------------------------------------------*/
+__RAM_FUNC FLASH_FlashInterfaceCmd(FunctionalState NewState);
+__RAM_FUNC FLASH_FlashSleepModeCmd(FunctionalState NewState);
 
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __STM32F4xx_IT_H */
+#endif /* __STM32F4xx_FLASH_RAMFUNC_H */
+
+/**
+  * @}
+  */ 
+
+/**
+  * @}
+  */ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

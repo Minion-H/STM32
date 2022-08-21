@@ -2,15 +2,15 @@
   ******************************************************************************
   * @file    Project/STM32F4xx_StdPeriph_Templates/stm32f4xx_it.c 
   * @author  MCD Application Team
-  * @version V1.8.0
-  * @date    04-November-2016
+  * @version V1.4.0
+  * @date    04-August-2014
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and 
   *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
-
+#include "led.h" 
+#include "key.h"
+#include "delay.h"
 
 /** @addtogroup Template_Project
   * @{
@@ -141,7 +143,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-
+ 
 }
 
 /******************************************************************************/
@@ -159,6 +161,18 @@ void SysTick_Handler(void)
 /*void PPP_IRQHandler(void)
 {
 }*/
+
+void EXTI4_IRQHandler(void)
+{
+	if(EXTI_GetITStatus(EXTI_Line4) != RESET)
+	{
+		if(Key_Scan(KEY_GPIO_PORT, KEY0_GPIO_PIN) == KEY_ON)
+		{
+			LED(LED_RED_GPIO_PORT, LED_RED_GPIO_PIN, LED_TOGGLE);
+		}
+		EXTI_ClearITPendingBit(EXTI_Line4);
+	}
+}
 
 /**
   * @}

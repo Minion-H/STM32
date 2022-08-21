@@ -1,38 +1,22 @@
+1.实验目的：
+  新建基于STM32F4 固件库V1.3.0的工程模板
+
+2.实验现象：
+  下载进开发板之后，红绿灯闪烁
+
+3.注意事项：
+
+ 1）新建工程的时候，请确保Option for target->C/C++选项卡的全部宏定义Define输入框字符串为：STM32F40_41xxx,USE_STDPERIPH_DRIVER
+ 
+ 
+4.手册中讲解到步骤15的时候的main.c源码如下：
+
+
+
+
+
 #include "stm32f4xx.h"
-#include "delay.h"
-#include "led.h"
-#include "key.h"
-#include "key_exti.h"
 
-//ALIENTEK 探索者STM32F407开发板 实验0
-//STM32F4工程模板-库函数版本
-//技术支持：www.openedv.com
-//淘宝店铺：http://eboard.taobao.com
-//广州市星翼电子科技有限公司  
-//作者：正点原子 @ALIENTEK
-
-int main(void)
-{
-	delay_init(168);
-	LED_GPIO_Config();
-	KEY_GPIO_Config();
-	EXTI_Key_Config();
-	
-	LED(LED_RED_GPIO_PORT, LED_RED_GPIO_PIN, LED_OFF);
-	LED(LED_GREEN_GPIO_PORT, LED_GREEN_GPIO_PIN, LED_OFF);
-	
-	while(1)
-	{
-//		if(Key_Scan(KEY_GPIO_PORT, KEY0_GPIO_PIN) == KEY_ON)
-//			LED(LED_RED_GPIO_PORT, LED_RED_GPIO_PIN, LED_TOGGLE);
-		if(Key_Scan(KEY_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON)
-			LED(LED_GREEN_GPIO_PORT, LED_GREEN_GPIO_PIN, LED_TOGGLE);
-	}
-}
-
-/*
-手册中讲解到步骤15的时候的main.c源码如下：
-#include "stm32f4xx.h"
 
 //ALIENTEK 探索者STM32F407开发板 实验0
 //STM32F4工程模板-库函数版本
@@ -69,6 +53,3 @@ int main(void)
 	
 	}
 }
-*/
-
-
